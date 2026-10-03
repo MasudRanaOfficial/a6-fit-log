@@ -1,29 +1,16 @@
 import { Workout } from "@/types/workout";
 
-const BASE_URL = "https://api.api-store.workers.dev/api/fitlog";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "";
 
 export async function getAllWorkouts(): Promise<Workout[]> {
-  const res = await fetch(BASE_URL, {
-    cache: "no-store",
-  });
-
-  if (!res.ok) {
-    throw new Error(`Failed to fetch workouts: ${res.statusText}`);
-  }
-
-  const data = await res.json();
-  return Array.isArray(data) ? data : data.data || [];
+  const res = await fetch(API_BASE_URL, { cache: "no-store" });
+  if (!res.ok) throw new Error("Failed to fetch workouts from API");
+  return res.json();
 }
 
 export async function getWorkoutById(id: string | number): Promise<Workout> {
-  const res = await fetch(`${BASE_URL}/${id}`, {
-    cache: "no-store",
-  });
-
-  if (!res.ok) {
-    throw new Error(`Failed to fetch workout with ID ${id}: ${res.statusText}`);
-  }
-
-  const data = await res.json();
-  return data.data || data;
+  const workouts = await getAllWorkouts();
+  const workout = workouts.find((item) => String(item.id) === String(id));
+  if (!workout) throw new Error("Workout not found");
+  return workout;
 }
