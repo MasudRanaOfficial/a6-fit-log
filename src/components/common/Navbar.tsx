@@ -26,6 +26,8 @@ export function Navbar() {
           <Image
             src="/logo.png"
             alt="FitLog logo"
+            width={40}
+            height={40}
             className="size-10 object-contain"
           />
           <div className="hidden sm:block">

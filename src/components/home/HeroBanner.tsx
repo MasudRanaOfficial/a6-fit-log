@@ -34,8 +34,10 @@ export function HeroBanner() {
               <div className="absolute -inset-6 rounded-full bg-[#ccff00]/10 blur-3xl" />
               <Image
                 src="/banner.png"
-                alt="Workout illustration"
-                className="relative w-full object-contain"
+                alt="Workout banner"
+                width={800}
+                height={600}
+                className="h-full w-full object-contain"
               />
               <div className="absolute bottom-3 right-3 hidden items-center gap-2 rounded-full border border-white/10 bg-black/60 px-3 py-2 text-[10px] font-bold uppercase tracking-[0.16em] text-white backdrop-blur sm:flex">
                 <ArrowUpRight className="size-3.5 text-[#ccff00]" />

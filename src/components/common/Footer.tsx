@@ -9,6 +9,8 @@ export function Footer() {
           <Image
             src="/logo.png"
             alt="FitLog logo"
+            width={32}
+            height={32}
             className="size-8 object-contain"
           />
           <span className="font-display text-lg">FITLOG</span>

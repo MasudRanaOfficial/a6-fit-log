@@ -10,12 +10,15 @@ export function WorkoutCard({ workout }: { workout: Workout }) {
       className="card card-surface overflow-hidden rounded-2xl transition duration-200 hover:-translate-y-1"
     >
       <figure className="aspect-16/10 overflow-hidden bg-base-200">
-        <Image
-          src={workout.image}
-          alt={workout.name}
-          className="h-full w-full object-cover transition duration-300 hover:scale-[1.03]"
-          loading="lazy"
-        />
+        <div className="relative aspect-4/3 overflow-hidden bg-base-200">
+          <Image
+            src={workout.image}
+            alt={workout.name}
+            width={400}
+            height={300}
+            className="h-full w-full object-contain"
+          />
+        </div>
       </figure>
       <div className="card-body gap-4 p-5">
         <div className="flex flex-wrap gap-2">
