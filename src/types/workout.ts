@@ -1,31 +1,15 @@
-export interface Workout {
-  id: number | string;
+export type Workout = {
+  id: string | number;
   name: string;
-  image: string;
-  muscleGroups: string[];
-  equipment: string;
-  difficulty: "Beginner" | "Intermediate" | "Advanced" | string;
-  duration: number;
-  caloriesBurned: number;
-  sets: number;
-  reps: string;
-  rating: number;
   description: string;
-  instructions: string[];
-}
-
-export interface PlannedWorkout extends Workout {
-  isDone?: boolean;
-  addedAt?: string;
-}
-
-export type WorkoutsResponse = Workout[];
-export type SingleWorkoutResponse = Workout;
-
-export type SortOption = "Duration" | "Calories" | "Rating";
-
-export interface MetricsSummary {
-  exercises: number;
-  minutes: number;
+  categories: string[];
+  equipment: string[];
+  difficulty: string;
+  sets: string | number;
+  reps: string;
+  duration: number;
   calories: number;
-}
+  rating: number;
+  image: string;
+  instructions: string[];
+};

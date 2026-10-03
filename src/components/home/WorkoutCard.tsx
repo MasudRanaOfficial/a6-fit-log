@@ -1,41 +1,54 @@
 import Link from "next/link";
-import Image from "next/image";
+import { Clock3, Flame, Star } from "lucide-react";
 import { Workout } from "@/types/workout";
+import Image from "next/image";
 
-export default function WorkoutCard({ workout }: { workout: Workout }) {
+export function WorkoutCard({ workout }: { workout: Workout }) {
   return (
     <Link
       href={`/workout/${workout.id}`}
-      className="card bg-[#161920] border border-[#262b36] hover:border-[#ccff00]/50 transition-all overflow-hidden rounded-xl"
+      className="card card-surface overflow-hidden rounded-2xl transition duration-200 hover:-translate-y-1"
     >
-      <figure className="relative h-48 w-full bg-[#1b1f28]">
+      <figure className="aspect-16/10 overflow-hidden bg-base-200">
         <Image
           src={workout.image}
           alt={workout.name}
-          fill
-          sizes="(max-width: 768px) 100vw, 33vw"
-          className="object-cover"
+          className="h-full w-full object-cover transition duration-300 hover:scale-[1.03]"
+          loading="lazy"
         />
       </figure>
-      <div className="card-body p-5">
-        <div className="flex flex-wrap gap-1 mb-1">
-          {workout.muscleGroups?.map((group, idx) => (
+      <div className="card-body gap-4 p-5">
+        <div className="flex flex-wrap gap-2">
+          {workout.categories.map((category) => (
             <span
-              key={idx}
-              className="badge badge-xs bg-[#242a36] text-gray-300 border-none"
+              key={category}
+              className="badge badge-sm rounded-full border-[#ccff00]/20 bg-[#ccff00]/10 px-3 text-[10px] font-bold uppercase tracking-[0.12em] text-[#ccff00]"
             >
-              {group}
+              {category}
             </span>
           ))}
         </div>
-        <h3 className="card-title text-base text-white uppercase">
-          {workout.name}
-        </h3>
-        <p className="text-xs text-gray-400">Equipment: {workout.equipment}</p>
-        <div className="card-actions justify-between items-center pt-3 border-t border-[#222732] text-xs text-gray-400">
-          <span>⏱️ {workout.duration}m</span>
-          <span>🔥 {workout.caloriesBurned} kcal</span>
-          <span className="text-yellow-400 font-bold">★ {workout.rating}</span>
+        <div>
+          <h3 className="font-display text-2xl uppercase leading-none text-white">
+            {workout.name}
+          </h3>
+          <p className="muted-copy mt-2 line-clamp-1 text-sm">
+            {workout.equipment.join(", ")}
+          </p>
+        </div>
+        <div className="flex items-center gap-4 border-t border-base-300 pt-3 text-xs font-semibold text-base-content/55">
+          <span className="inline-flex items-center gap-1.5">
+            <Clock3 className="size-3.5" />
+            {workout.duration} min
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <Flame className="size-3.5" />
+            {workout.calories} kcal
+          </span>
+          <span className="inline-flex items-center gap-1.5">
+            <Star className="size-3.5 fill-[#ccff00] text-[#ccff00]" />
+            {workout.rating.toFixed(1)}
+          </span>
         </div>
       </div>
     </Link>
