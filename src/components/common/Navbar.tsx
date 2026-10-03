@@ -1,93 +1,135 @@
 "use client";
 
 import Link from "next/link";
-import { useWorkout } from "@/context/WorkoutContext";
+import { usePathname } from "next/navigation";
+import { Bookmark, ClipboardList, Dumbbell, Menu, X } from "lucide-react";
+import { useState } from "react";
+import { useWorkoutContext } from "@/context/WorkoutContext";
+import Image from "next/image";
 
-export default function Navbar() {
-  const { planList, savedList } = useWorkout();
+export function Navbar() {
+  const pathname = usePathname();
+  const { planCount, savedCount } = useWorkoutContext();
+  const [open, setOpen] = useState(false);
+
+  const isHome = pathname === "/";
+  const isPlan = pathname === "/my-plan";
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b border-[#222731] bg-[#0f1115]/95 backdrop-blur-md">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-        {/* Left: Brand Logo & Title */}
-        <Link href="/" className="flex items-center gap-2.5 group">
-          <div className="w-8 h-8 rounded-lg bg-[#161920] border border-[#262b36] flex items-center justify-center text-[#ccff00] group-hover:border-[#ccff00] transition-colors">
-            {/* Dumbbell Icon */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-4 h-4"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-            >
-              <path
-                d="M6 5v14M18 5v14M3 8v8M21 8v8M6 12h12"
-                stroke="currentColor"
-                strokeWidth="2.5"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-              />
-            </svg>
+    <header className="sticky top-0 z-50 border-b border-base-300 bg-[#0b0d10]/95 backdrop-blur">
+      <div className="page-shell flex h-[74px] items-center justify-between gap-4">
+        <Link
+          href="/"
+          className="flex shrink-0 items-center gap-3"
+          onClick={() => setOpen(false)}
+        >
+          <Image
+            src="/logo.png"
+            alt="FitLog logo"
+            className="size-10 object-contain"
+          />
+          <div className="hidden sm:block">
+            <div className="font-display text-xl leading-none">FITLOG</div>
+            <div className="mt-1 text-[9px] font-bold uppercase tracking-[0.22em] text-base-content/50">
+              Workout Library
+            </div>
           </div>
-          <span className="font-black text-xl tracking-wider text-white uppercase font-sans">
-            FIT<span className="text-[#ccff00]">LOG</span>
-          </span>
         </Link>
 
-        {/* Right: Saved & Today's Plan Actions */}
-        <div className="flex items-center gap-2.5 sm:gap-3">
-          {/* Saved Workouts Button */}
+        <nav
+          className="hidden items-center gap-1 md:flex"
+          aria-label="Primary navigation"
+        >
           <Link
-            href="/my-plan"
-            className="btn btn-sm h-10 px-3 sm:px-4 bg-[#161920] hover:bg-[#1f242e] border-[#262b36] hover:border-gray-600 text-gray-200 normal-case rounded-lg font-medium flex items-center gap-2 transition-all"
+            href="/"
+            className={`rounded-full px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] transition ${
+              isHome
+                ? "bg-white text-black"
+                : "text-base-content/60 hover:text-white"
+            }`}
           >
-            {/* Bookmark Icon */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-4 h-4 text-gray-400"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth="2"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"
-              />
-            </svg>
-            <span className="text-xs sm:text-sm">Saved</span>
-            <span className="badge badge-sm bg-[#222731] text-gray-300 border-none font-bold px-1.5 py-0.5">
-              {savedList.length}
-            </span>
+            Workout
           </Link>
-
-          {/* Today's Plan Button */}
           <Link
             href="/my-plan"
-            className="btn btn-sm h-10 px-3 sm:px-4 bg-[#ccff00] hover:bg-[#b8e600] text-black border-none normal-case rounded-lg font-bold flex items-center gap-2 shadow-[0_0_15px_rgba(204,255,0,0.15)] transition-all"
+            className={`rounded-full px-4 py-2 text-xs font-bold uppercase tracking-[0.16em] transition ${
+              isPlan
+                ? "bg-white text-black"
+                : "text-base-content/60 hover:text-white"
+            }`}
           >
-            {/* Clipboard / Plan Icon */}
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              className="w-4 h-4 text-black"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-              strokeWidth="2.5"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"
-              />
-            </svg>
-            <span className="text-xs sm:text-sm">Plan</span>
-            <span className="badge badge-sm bg-black text-[#ccff00] border-none font-extrabold px-1.5 py-0.5">
-              {planList.length}/5
-            </span>
+            My Plan
+          </Link>
+        </nav>
+
+        <div className="hidden items-center gap-2 sm:flex">
+          <Link
+            href="/my-plan"
+            className="badge h-9 rounded-full border-0 bg-[#ccff00] px-3 font-bold text-black hover:bg-[#c0f200]"
+          >
+            <ClipboardList className="mr-1 size-3.5" />
+            Plan <span>{planCount}</span>
+          </Link>
+          <Link
+            href="/my-plan"
+            className="badge h-9 rounded-full border border-base-content/20 bg-transparent px-3 font-bold text-base-content hover:border-base-content/40"
+          >
+            <Bookmark className="mr-1 size-3.5" />
+            Saved <span>{savedCount}</span>
           </Link>
         </div>
+
+        <button
+          className="btn btn-square btn-ghost md:hidden"
+          aria-label={open ? "Close menu" : "Open menu"}
+          onClick={() => setOpen((value) => !value)}
+        >
+          {open ? <X className="size-5" /> : <Menu className="size-5" />}
+        </button>
       </div>
+
+      {open && (
+        <div className="border-t border-base-300 md:hidden">
+          <div className="page-shell flex flex-col gap-2 py-4">
+            <Link
+              href="/"
+              onClick={() => setOpen(false)}
+              className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold uppercase tracking-[0.12em] ${
+                isHome ? "bg-[#ccff00] text-black" : "bg-base-200"
+              }`}
+            >
+              <Dumbbell className="size-4" />
+              Workout
+            </Link>
+            <Link
+              href="/my-plan"
+              onClick={() => setOpen(false)}
+              className={`flex items-center gap-3 rounded-xl px-4 py-3 text-sm font-bold uppercase tracking-[0.12em] ${
+                isPlan ? "bg-[#ccff00] text-black" : "bg-base-200"
+              }`}
+            >
+              <ClipboardList className="size-4" />
+              My Plan
+            </Link>
+            <div className="mt-2 flex gap-2 border-t border-base-300 pt-4">
+              <Link
+                href="/my-plan"
+                onClick={() => setOpen(false)}
+                className="badge h-9 flex-1 rounded-full border-0 bg-[#ccff00] font-bold text-black"
+              >
+                Plan {planCount}
+              </Link>
+              <Link
+                href="/my-plan"
+                onClick={() => setOpen(false)}
+                className="badge h-9 flex-1 rounded-full border border-base-content/20 bg-transparent font-bold"
+              >
+                Saved {savedCount}
+              </Link>
+            </div>
+          </div>
+        </div>
+      )}
     </header>
   );
 }
