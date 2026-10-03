@@ -1,24 +1,26 @@
 import Link from "next/link";
+import { ArrowLeft, TriangleAlert } from "lucide-react";
 
 export default function NotFound() {
   return (
-    <div className="min-h-[60vh] flex flex-col items-center justify-center text-center px-4">
-      <h1 className="text-8xl font-black text-[#262b36] tracking-widest select-none">
-        404
-      </h1>
-      <h2 className="text-xl font-bold uppercase tracking-wider text-[#ccff00] mt-2">
-        Lift Not Found
-      </h2>
-      <p className="text-gray-400 text-sm max-w-sm mt-2 mb-6">
-        The routine or exercise you are looking for has been moved or does not
-        exist in the library.
-      </p>
-      <Link
-        href="/"
-        className="btn btn-sm bg-[#ccff00] text-black hover:bg-[#b8e600] border-none font-bold px-6"
-      >
-        Back to Library
-      </Link>
-    </div>
+    <section className="page-shell flex min-h-[65vh] items-center justify-center py-16">
+      <div className="card-surface w-full max-w-2xl rounded-3xl p-8 text-center sm:p-12">
+        <TriangleAlert className="mx-auto size-10 text-[#ccff00]" />
+        <p className="mt-5 font-display text-sm uppercase tracking-[0.24em] text-[#ccff00]">
+          404 / NOT FOUND
+        </p>
+        <h1 className="font-display mt-3 text-6xl uppercase leading-none text-white sm:text-8xl">
+          Wrong Route.
+        </h1>
+        <p className="muted-copy mx-auto mt-5 max-w-md leading-7">
+          This page does not exist. Humanity invented URLs and immediately
+          created broken ones.
+        </p>
+        <Link href="/" className="btn btn-primary mt-8 rounded-full px-6">
+          <ArrowLeft className="size-4" />
+          Back to workouts
+        </Link>
+      </div>
+    </section>
   );
 }

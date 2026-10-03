@@ -1,37 +1,28 @@
+import type { Metadata } from "next";
 import "./globals.css";
-import { Toaster } from "react-hot-toast";
+import { Navbar } from "@/components/common/Navbar";
+import { Footer } from "@/components/common/Footer";
 import { WorkoutProvider } from "@/context/WorkoutContext";
-import Navbar from "@/components/common/Navbar";
-import Footer from "@/components/common/Footer";
+import { Toaster } from "react-hot-toast";
 
-export const metadata = {
-  title: "FitLog — Workout Library & Gym Companion",
-  description:
-    "Track exercises, build your daily routine, and hit your fitness goals.",
+export const metadata: Metadata = {
+  title: "FitLog | Workout Library",
+  description: "A dark, no-nonsense workout library and daily plan tracker.",
 };
 
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
   return (
-    <html lang="en" data-theme="dark">
-      <body className="bg-[#0f1115] text-white flex flex-col min-h-screen">
+    <html lang="en" data-theme="fitlog">
+      <body>
         <WorkoutProvider>
-          <Toaster
-            position="bottom-right"
-            toastOptions={{
-              style: {
-                background: "#161920",
-                color: "#ffffff",
-                border: "1px solid #262b36",
-              },
-            }}
-          />
           <Navbar />
-          <main className="flex-1">{children}</main>
+          <main>{children}</main>
           <Footer />
+          <Toaster position="top-right" toastOptions={{ duration: 2400 }} />
         </WorkoutProvider>
       </body>
     </html>
